@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+ <Appenders>
+ <!-- 定义名为STDOUT的控制台输出格式 -->
+  <Console name="STDOUT" target="SYSTEM_OUT">
+   <PatternLayout pattern="%d [%-5p] %l - %m%n" />
+  </Console>
+  <!-- 定义名为File的文件，文件名为my.log-->
+  <File name="File" fileName="my.log">
+   <PatternLayout pattern="%d [%-5p] %l - %m%n" />
+  </File>
+  <!-- 定义名为RollingFile的滚动文档，文件名为my2.log,定义滚动时的压缩名 -->
+  <RollingFile name="RollingFile" fileName="dist/my2.log"
+
+   filePattern="dist/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+   <PatternLayout pattern="[%-5p] %d %c - %m%n" />
+   <Policies>
+    <TimeBasedTriggeringPolicy />
+    <SizeBasedTriggeringPolicy size="20 MB" /><!-- 定义日志文件最大为20M -->
+   </Policies>
+   <DefaultRolloverStrategy max="20" /><!-- 定义压缩的文件只保留20各 -->
+  </RollingFile>
+  <RollingFile name="ControllerRFile" fileName="dist/controller.log"
+
+   filePattern="dist/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i-controller.log.gz">
+   <PatternLayout pattern="[%-5p] %d %c - %m%n" />
+   <Policies>
+    <TimeBasedTriggeringPolicy />
+    <SizeBasedTriggeringPolicy size="20 MB" /><!-- 定义日志文件最大为20M -->
+   </Policies>
+   <DefaultRolloverStrategy max="20" /><!-- 定义压缩的文件只保留20各 -->
+  </RollingFile>
+  <RollingFile name="ServiceRFile" fileName="dist/service.log"
+
+   filePattern="dist/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i-service.log.gz">
+   <PatternLayout pattern="[%-5p] %d %c - %m%n" />
+   <Policies>
+    <TimeBasedTriggeringPolicy />
+    <SizeBasedTriggeringPolicy size="20 MB" /><!-- 定义日志文件最大为20M -->
+   </Policies>
+   <DefaultRolloverStrategy max="20" /><!-- 定义压缩的文件只保留20各 -->
+  </RollingFile>
+  <RollingFile name="RepositoryRFile" fileName="dist/repository.log"
+
+   filePattern="dist/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i-repository.log.gz">
+   <PatternLayout pattern="[%-5p] %d %c - %m%n" />
+   <Policies>
+    <TimeBasedTriggeringPolicy />
+    <SizeBasedTriggeringPolicy size="20 MB" /><!-- 定义日志文件最大为20M -->
+   </Policies>
+   <DefaultRolloverStrategy max="20" /><!-- 定义压缩的文件只保留20各 -->
+  </RollingFile>
+ </Appenders>
+ <Loggers><!-- 定义了一个root的日志，只输出info以上的信息，并且输出STDOUT -->
+  <Root level="Info">
+   <AppenderRef ref="STDOUT" />
+  </Root>
+ </Loggers>
+ <Loggers>
+  <Logger name="com.boz.log4j2.MyLogger" level="INFO" additivity="true">-
+   <AppenderRef ref="RollingFile" />
+   <AppenderRef ref="STDOUT" />
+  </Logger>
+  <Logger name="com.boz.log4j2.ControllerLogger" level="INFO" additivity="true">
+  	<AppenderRef ref="ControllerRFile" />
+   <AppenderRef ref="STDOUT" />
+  </Logger>
+  <Logger name="com.boz.log4j2.ServiceLogger" level="INFO" additivity="true">
+  	<AppenderRef ref="ServiceRFile" />
+   <AppenderRef ref="STDOUT" />
+  </Logger>
+  <Logger name="com.boz.log4j2.RepositoryLogger" level="INFO" additivity="true">
+  	<AppenderRef ref="RepositoryRFile" />
+   <AppenderRef ref="STDOUT" />
+  </Logger>
+ </Loggers>
+</Configuration>
+

@@ -8,6 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="D:/wls1211_dev/wlserver/server/lib/weblogic.jar"/>
+	<classpathentry kind="lib" path="D:/wls1211_dev/modules/javax.servlet_2.0.0.0_3-0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
