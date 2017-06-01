@@ -20,7 +20,7 @@ public class MyExceptionHandler implements HandlerExceptionResolver {
 			BufferedWriter bWriter=new BufferedWriter(new OutputStreamWriter(response.getOutputStream()));
 			bWriter.write("123123123");
 			bWriter.close();
-		}catch(Exception e){
+		}catch(Throwable e){
 			
 		}
 		return new ModelAndView();
