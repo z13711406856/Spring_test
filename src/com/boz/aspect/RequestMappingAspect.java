@@ -11,7 +11,7 @@ import com.boz.log4j2.ControllerLogger;
 
 @Component
 @Aspect
-public class LogAspect {
+public class RequestMappingAspect {
 	@Around("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
 	public void arroundRequestMapping(ProceedingJoinPoint jp) throws Throwable{
 		long begin=System.currentTimeMillis();
