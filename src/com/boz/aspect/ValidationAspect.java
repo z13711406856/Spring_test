@@ -14,8 +14,7 @@ import com.boz.HandlerExceptionResolver.ValidationMessageException;
 public class ValidationAspect {
 	@Around("@args(javax.validation.Valid)")
 	public void aroundValid(ProceedingJoinPoint jp) throws Throwable{
-		jp.proceed(jp.getArgs());
-		/*Object[] objects=jp.getArgs();
+		Object[] objects=jp.getArgs();
 		BindingResult bindingResult=null;
 		for(Object obj:objects){
 			if(obj instanceof BindingResult){
@@ -28,7 +27,7 @@ public class ValidationAspect {
 			throw new ValidationMessageException(makeMsg(bindingResult));
 		}else {
 			jp.proceed(jp.getArgs());
-		}*/
+		}
 	}
 	public String makeMsg(BindingResult bindingResult){
 		return null;
