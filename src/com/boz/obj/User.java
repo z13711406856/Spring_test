@@ -5,8 +5,9 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class User {
+	@Pattern(regexp="abc",message="必须包含abc字符")
+	@NotNull(message="帐号不能为空")
 	@Size(min=4,max=10,message="长度不能小于4,不能大于10")
-	@Pattern(regexp="abd",message="必须包含abc字符")
 	private String account;
 	@NotNull(message="密码不能为空")
 	private String password;

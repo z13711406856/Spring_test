@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.boz.log4j2.MyLogger;
+
 
 public class MyExceptionHandler implements HandlerExceptionResolver {
 
@@ -17,9 +19,7 @@ public class MyExceptionHandler implements HandlerExceptionResolver {
 			HttpServletResponse response, Object handler, Exception ex) {
 		// TODO Auto-generated method stub
 		try{
-			BufferedWriter bWriter=new BufferedWriter(new OutputStreamWriter(response.getOutputStream()));
-			bWriter.write("123123123");
-			bWriter.close();
+			MyLogger.log.error("“Ï≥£",ex);
 		}catch(Throwable e){
 			
 		}

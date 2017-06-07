@@ -1,6 +1,8 @@
 package com.boz.action;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -27,22 +29,11 @@ import com.boz.obj.User;
 public class LoginAction {
 	@RequestMapping("/login")
 	@ResponseBody
-	public String login(@Valid User user,BindingResult bindingResult){
-		if(bindingResult.hasErrors()){
-			List<ObjectError> l=bindingResult.getAllErrors();
-			for(ObjectError objectError:l){
-				FieldError fieldError=(FieldError) objectError;
-				Object s=fieldError.getRejectedValue();
-				Object[] objects=objectError.getArguments();
-				DefaultMessageSourceResolvable defaultMessageSourceResolvable=(DefaultMessageSourceResolvable)objects[0];
-				defaultMessageSourceResolvable.getDefaultMessage();
-				String[] codes=objectError.getCodes();
-				String message=objectError.getDefaultMessage();
-				String objectName=objectError.getObjectName();
-				String toString=objectError.toString();
-			}
-		}
-		throw new RuntimeException("123");
+	public Object login(@Valid User user,BindingResult bindingResult){
+		Map<String,String> map=new HashMap<String, String>();
+		map.put("sdf", "sdfsdf");
+		map.put("account", user.getAccount());
+		return map;
 	}
 	@RequestMapping("/ModelAndView")
 	public ModelAndView test(){

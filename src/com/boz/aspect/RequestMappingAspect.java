@@ -22,43 +22,44 @@ import com.boz.log4j2.ControllerLogger;
 @Aspect
 public class RequestMappingAspect {
 	@Around("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
-	public void arroundRequestMapping(ProceedingJoinPoint jp) throws Throwable{
+	public Object arroundRequestMapping(ProceedingJoinPoint jp) throws Throwable{
 		long begin=System.currentTimeMillis();
+		Object result=null;
 		Object[] objects=jp.getArgs();//get request arguments
 		for(Object obj:objects){
 			if(obj instanceof BindingResult){
 				BindingResult bindingResult=(BindingResult) obj;
 				if(bindingResult.hasErrors()){
-					doValidError(bindingResult);
+					result=doValidError(bindingResult);
+					break;
 				}
-				return;
 			}
 		}
-		jp.proceed(jp.getArgs());
+		if(result==null){
+			result=jp.proceed(jp.getArgs());
+		}
 		long end=System.currentTimeMillis();
 		ControllerLogger.log.info(String.format("%s ÏûºÄ:%dms",jp.toString(),end-begin));
+		return result;
 	}
 	
-	private void doValidError(BindingResult bindingResult){
+	private Object doValidError(BindingResult bindingResult){
 		String typeName="vaildError";
+		String typeKey="type";
+		String listKey="content";
 		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("type", typeName); 
+		map.put(typeKey, typeName); 
+		List<Map.Entry<String, String>> cList=new ArrayList<Map.Entry<String,String>>();
+		map.put(listKey, cList);
 		List<ObjectError> eList=bindingResult.getAllErrors();
 		for(ObjectError objectError:eList){
 			DefaultMessageSourceResolvable defaultMessageSourceResolvable=(DefaultMessageSourceResolvable)objectError.getArguments()[0];
 			String eleName=defaultMessageSourceResolvable.getDefaultMessage();
 			String msg=objectError.getDefaultMessage();
+			cList.add(new AbstractMap.SimpleEntry<String,String>(eleName,msg));
 		}
+		return map;
 	}
-	private void putError(Map map,String eleName,String msg){
-		String key="content";
-		List<Map.Entry<String, String>> list=(List<Map.Entry<String, String>>)map.get(key);
-		if(list==null){
-			list=new ArrayList<Map.Entry<String, String>>();
-			map.put(key, list);
-		}
-		list.add(new AbstractMap.SimpleEntry<String,String>(eleName,msg));
-		
-	}
+
 	
 }
